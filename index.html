@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frutiger Aero Pomodoro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="duration-slider.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGCSURBVFhH7ZY9TsNAEIVnjQQFPQfgEpyCK9BwGqDlAFwBcQQoaOhpEBUVNT0SBQUSBd6HvfKu7FmvnQhLlvKkp8TreXn7M7uz2b+pqupC07t6I8dx3MC+YZ+xB+zWdd1L9OL8h+g5XyPgDvYZ+4o9Y7fYI/YSfTk/Dw3yxQCOsR1sR7KK4Vr6vGNH2Fby/4QBHGAvWBdry7UNrA+u3WKHkqfDALawB+wHm2JtA+vDPW6wTclXQwN1+Wds6Ou1DawPr+MWW5d8NTQwwPrYYBtYH17HFbaQfDU0MMT62GAb2BC+jiW2JvlqaGCI9bHBNrAhfB0LbFXy1dDAEOtjg21gQ/g6rrEVyVdDA0Osjw22gQ3h67jDliVfDQ0MsT422AY2hK9jia1JvhoaGGJ9bLANbAhfxwJblXw1NDDEhmzYYBvYEL6OK2xF8tXQwBDrY4NtYEP4OubYsuSroYEh1scG28CG8HUssDXJV0MDQ6yPDbaBDeHruMeWJP+HVfULFR/JYHy2G+AAAAAASUVORK5CYII=">
+</head>
+<body>
+    <div class="background-container">
+        <video autoplay muted loop playsinline>
+            <source src="imgs/ventura.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="container">
+        <div class="glass-panel">
+            <div class="nav-buttons" id="nav-container">
+                <button id="timer-nav" class="glass-button nav-button active" onclick="showSection('timer-section')">Timer</button>
+                <button id="stopwatch-nav" class="glass-button nav-button" onclick="showSection('stopwatch-section')">Stopwatch</button>
+                <button id="tasks-nav" class="glass-button nav-button" onclick="showSection('tasks-section')">Tasks</button>
+            </div>
+
+            <div id="timer-section" class="section">
+                <h1>Pomodoro Timer</h1>
+                
+                <div class="settings-section">
+                    <button id="settings-toggle" class="glass-button">⚙️ Settings</button>
+                    <div id="settings-panel" class="settings-panel" style="display: none;">
+                        <div class="settings-tabs">
+                            <button id="timer-settings-tab" class="glass-button tab-button active">Timer</button>
+                            <button id="customize-settings-tab" class="glass-button tab-button">Customize</button>
+                        </div>
+                        
+                        <div id="timer-settings" class="settings-tab-content">
+                            <div class="settings-group">
+                                <h3>Work Session</h3>
+                                <div class="setting-item">
+                                    <label for="pomodoro-duration">Pomodoro Duration (minutes):</label>
+                                    <input type="number" id="pomodoro-duration" min="1" max="60" value="25">
+                                </div>
+                                <div class="setting-item">
+                                    <label for="auto-start-breaks">Auto-start Breaks:</label>
+                                    <label class="switch">
+                                        <input type="checkbox" id="auto-start-breaks">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="settings-group">
+                                <h3>Break Settings</h3>
+                                <div class="setting-item">
+                                    <label for="short-break-duration">Short Break (minutes):</label>
+                                    <input type="number" id="short-break-duration" min="1" max="30" value="5">
+                                </div>
+                                <div class="setting-item">
+                                    <label for="long-break-duration">Long Break (minutes):</label>
+                                    <input type="number" id="long-break-duration" min="1" max="45" value="15">
+                                </div>
+                                <div class="setting-item">
+                                    <label for="long-break-interval">Long Break Interval:</label>
+                                    <input type="number" id="long-break-interval" min="1" max="10" value="4">
+                                    <span class="setting-hint">sessions</span>
+                                </div>
+                            </div>
+
+                            <div class="settings-group">
+                                <h3>Notifications</h3>
+                                <div class="setting-item">
+                                    <label for="sound-enabled">Sound Notifications:</label>
+                                    <label class="switch">
+                                        <input type="checkbox" id="sound-enabled" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <label for="notification-volume">Volume:</label>
+                                    <input type="range" id="notification-volume" min="0" max="100" value="50">
+                                    <span class="volume-value">50%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="customize-settings" class="settings-tab-content" style="display: none;">
+                            <div class="settings-group">
+                                <h3>Colors</h3>
+                                <div class="setting-item">
+                                    <label for="primary-color">Gradient Start:</label>
+                                    <input type="color" id="primary-color" value="#3ba9ee">
+                                </div>
+                                <div class="setting-item">
+                                    <label for="secondary-color">Gradient End:</label>
+                                    <input type="color" id="secondary-color" value="#a7d8ff">
+                                </div>
+                            </div>
+
+                            <div class="settings-group">
+                                <h3>Background</h3>
+                                <div class="setting-item">
+                                    <label for="background-color">Background Color:</label>
+                                    <input type="color" id="background-color" value="#e8f4ff">
+                                </div>
+                                <div class="setting-item">
+                                    <label for="text-color">Text Color:</label>
+                                    <input type="color" id="text-color" value="#2c3e50">
+                                </div>
+                            </div>
+
+                            <div class="setting-item preview-buttons">
+                                <button class="glass-button">Preview Button</button>
+                                <button class="glass-button active">Active Button</button>
+                            </div>
+
+                            <div class="setting-item justify-center">
+                                <button id="reset-colors" class="glass-button">Reset to Default Colors</button>
+                            </div>
+                        </div>
+                        <button id="save-settings" class="glass-button primary">Save Settings</button>
+                    </div>
+                </div>
+
+                <div class="timer-display">
+                    <span id="minutes">25</span>:<span id="seconds">00</span>
+                </div>
+                <div class="timer-progress">
+                    <div class="progress-bar" id="timer-progress-bar"></div>
+                </div>
+
+                <div class="controls">
+                    <button id="pomodoro" class="glass-button active">Pomodoro</button>
+                    <button id="shortBreak" class="glass-button">Short Break</button>
+                    <button id="longBreak" class="glass-button">Long Break</button>
+                </div>
+
+                <div class="timer-controls">
+                    <button id="start" class="glass-button">Start</button>
+                    <button id="pause" class="glass-button">Pause</button>
+                    <button id="reset" class="glass-button">Reset</button>
+                    <button id="open-ipod" class="glass-button">♫</button>
+                </div>
+
+                <div class="music-player-container" id="musicPlayer">
+                    <div class="window-title-bar" id="dragHandle">
+                        <div class="window-title">iPod</div>
+                        <div class="window-controls">
+                            <button class="window-button minimize-button" id="minimizePlayer">−</button>
+                        </div>
+                    </div>
+                    
+                    <div class="retro-music-player">
+                        <div class="player-display">
+                            <div class="track-info">
+                                <div class="track-text">
+                                    <div id="now-playing">No track playing</div>
+                                    <div id="track-artist">Unknown Artist</div>
+                                </div>
+                                <div class="duration-slider-container">
+                                    <input type="range" class="duration-slider" min="0" max="100" value="0" step="0.01">
+                                    <div class="time-display">
+                                        <span class="current-time">0:00</span>
+                                        <span class="total-duration">0:00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="volume-control">
+                                <div class="volume-icon">🔊</div>
+                                <div class="volume-popup">
+                                    <div class="volume-slider-container">
+                                        <input type="range" class="volume-slider" min="0" max="100" value="50" title="Volume" orient="vertical">
+                                        <span class="volume-display">50%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="player-controls">
+                            <div class="wheel-button menu" data-action="menu">menu</div>
+                            <div class="wheel-button forward" data-action="next">⟩⟩</div>
+                            <div class="wheel-button back" data-action="prev">⟨⟨</div>
+                            <div class="wheel-button play" data-action="play">▶ ‖</div>
+                            <div class="center-circle"></div>
+                        </div>
+                    </div>
+
+                    <div class="window-title-bar bottom" id="dragHandleBottom">
+                        <div class="window-title">iPod</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="stopwatch-section" class="section" style="display: none;">
+                <h2>Stopwatch</h2>
+                <div class="stopwatch-display">
+                    <span id="stopwatch">00:00:00</span>
+                </div>
+                <div class="stopwatch-controls">
+                    <button id="stopwatch-start" class="glass-button">Start</button>
+                    <button id="stopwatch-pause" class="glass-button">Pause</button>
+                    <button id="stopwatch-reset" class="glass-button">Reset</button>
+                    <button id="stopwatch-lap" class="glass-button">Lap</button>
+                </div>
+                <div class="lap-times">
+                    <h3>Lap Times</h3>
+                    <ul id="lap-times-list" class="lap-list"></ul>
+                </div>
+            </div>
+
+            <div id="tasks-section" class="section" style="display: none;">
+                <h2>Tasks</h2>
+                <div class="tasks-list">
+                    <div class="task-input">
+                        <div class="task-input-group">
+                            <input type="text" id="new-task" placeholder="Add a new task...">
+                            <select id="task-priority">
+                                <option value="low">Low Priority</option>
+                                <option value="medium" selected>Medium Priority</option>
+                                <option value="high">High Priority</option>
+                            </select>
+                        </div>
+                        <button id="add-task" class="glass-button">Add</button>
+                    </div>
+                    <div class="tasks-filter">
+                        <button class="glass-button filter-btn active" data-filter="all">All</button>
+                        <button class="glass-button filter-btn" data-filter="active">Active</button>
+                        <button class="glass-button filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                    <ul id="tasks-container">
+                        <!-- Tasks will be added here dynamically -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="musicPlayer.js"></script>
+    
+    <!-- Game Window -->
+    <div class="game-window" id="gameWindow">
+        <div class="window-title-bar" id="gameDragHandle">
+            <div class="window-title">Brick Breaker</div>
+            <div class="window-controls">
+                <button class="window-button minimize-button" id="minimizeGame">−</button>
+                <button class="window-button close-button" id="closeGame">×</button>
+            </div>
+        </div>
+        <div class="game-container">
+            <div class="score">Score: <span id="score">0</span></div>
+            <canvas id="gameCanvas"></canvas>
+            <div class="controls">Use ← → arrows or mouse to move paddle</div>
+        </div>
+    </div>
+    
+    <div class="taskbar">
+        <div class="taskbar-items">
+            <button class="taskbar-button start-button" id="start-button">
+                <img src="imgs/windows.png" alt="Start" class="windows-logo">
+                Start
+            </button>
+            <div class="taskbar-separator"></div>
+            <button class="taskbar-button" id="wallpaper-button">
+                🖼️ Wallpaper
+            </button>
+            <a href="https://country-odyssey.vercel.app/" target="_blank" id="game-button" class="taskbar-button">
+                <i class="fas fa-gamepad"></i>
+                <span>🌍 Country Odyssey</span>
+            </a>
+            <div id="taskbar-clock" class="taskbar-clock"></div>
+        </div>
+    </div>
+
+    <!-- Add the wallpaper panel -->
+    <div class="wallpaper-panel" style="display: none;">
+        <div class="window-title-bar">
+            <div class="window-title">Background Settings</div>
+            <div class="window-controls">
+                <button class="window-button minimize-button" id="close-wallpaper">×</button>
+            </div>
+        </div>
+        <div class="wallpaper-content">
+            <h3>Choose Background</h3>
+            <div class="wallpaper-options">
+                <div class="wallpaper-option" data-video="windowsxp.mp4">
+                    <img src="imgs/16_9-frutiger-aero-252.png" alt="Windows XP">
+                    <span>Windows XP</span>
+                </div>
+                <div class="wallpaper-option" data-video="windowsvista.mp4">
+                    <img src="imgs/16_9-frutiger-aero-259.png" alt="Windows Vista">
+                    <span>Windows Vista</span>
+                </div>
+                <div class="wallpaper-option" data-video="windowsvista2.mp4">
+                    <img src="imgs/16_9-frutiger-aero-260.png" alt="Windows Vista 2">
+                    <span>Windows Vista 2</span>
+                </div>
+                <div class="wallpaper-option" data-video="ventura.mp4">
+                    <img src="imgs/16_9-frutiger-aero-224.png" alt="Windows 7">
+                    <span>Ventura</span>
+                </div>
+                <div class="wallpaper-option" data-type="solid-color">
+                    <div class="color-preview"></div>
+                    <span>Gradient Color</span>
+                </div>
+                <div class="wallpaper-option" data-type="slideshow">
+                    <div class="slideshow-preview">
+                        <img src="imgs/16_9-frutiger-aero-1.png" alt="Slideshow">
+                        <div class="slideshow-icon">🔄</div>
+                    </div>
+                    <span>Slideshow (10s)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
